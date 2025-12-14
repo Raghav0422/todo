@@ -32,7 +32,18 @@ def updatetask(request,pk):
 
         if form.is_valid():
             form.save()
-            return redirect('todod/tasks')
+            return redirect('/todo/tasks/')
     context ={'form':form}
 
     return render(request,"update_task.html",context)
+
+def delete(request,pk):
+    item = Task.objects.get(id=pk)
+
+    if request.method=="POST":
+        item.delete()
+        return redirect('/todo/tasks/')
+
+    context={'item':item}
+
+    return render(request,"delete.html", context)
